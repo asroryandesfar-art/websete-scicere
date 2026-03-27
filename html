@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Skincare - Premium Natural Beauty</title>
+    <meta name="description" content="Discover luxurious skincare crafted with natural ingredients for radiant, healthy skin">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- React & Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        #root {
+            min-height: 100vh;
+        }
+        /* Loading animation */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #FAF8F3;
+        }
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #C9A96E;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+        </div>
+    </div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        
+        // Lucide Icons as Components
+        const ShoppingCart = (props) => <i data-lucide="shopping-cart" {...props}></i>;
+        const User = (props) => <i data-lucide="user" {...props}></i>;
+        const Search = (props) => <i data-lucide="search" {...props}></i>;
+        const Menu = (props) => <i data-lucide="menu" {...props}></i>;
+        const X = (props) => <i data-lucide="x" {...props}></i>;
+        const Star = (props) => <i data-lucide="star" {...props}></i>;
+        const Heart = (props) => <i data-lucide="heart" {...props}></i>;
+        const Mail = (props) => <i data-lucide="mail" {...props}></i>;
+        const Phone = (props) => <i data-lucide="phone" {...props}></i>;
+        const MapPin = (props) => <i data-lucide="map-pin" {...props}></i>;
+        const Instagram = (props) => <i data-lucide="instagram" {...props}></i>;
+        const Facebook = (props) => <i data-lucide="facebook" {...props}></i>;
+        const Twitter = (props) => <i data-lucide="twitter" {...props}></i>;
+        const Filter = (props) => <i data-lucide="filter" {...props}></i>;
+
+        // Initialize Lucide icons after component mount
+        useEffect(() => {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }, []);
+
+        // Sample Data
+        const products = [
+            {
+                id: 1,
+                name: "Luminous Glow Serum",
+                category: "Serum",
+                price: 485000,
+                oldPrice: 650000,
+                image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&h=500&fit=crop",
+                rating: 4.9,
+                reviews: 234,
+                description: "Serum pencerahan dengan Vitamin C murni dan Hyaluronic Acid untuk kulit yang glowing alami.",
+                featured: true,
+                new: true
+            },
+            {
+                id: 2,
+                name: "Cloud Hydrating Moisturizer",
+                category: "Moisturizer",
+                price: 395000,
+                image: "https://images.unsplash.com/photo-1556228852-80e10279bb0e?w=500&h=500&fit=crop",
+                rating: 4.8,
+                reviews: 189,
+                description: "Pelembab ultra-ringan dengan tekstur cloud-like yang melembabkan tanpa rasa berat.",
+                featured: true
+            },
+            {
+                id: 3,
+                name: "Gentle Milk Cleanser",
+                category: "Cleanser",
+                price: 285000,
+                image: "https://images.unsplash.com/photo-1571875257727-256c39da42af?w=500&h=500&fit=crop",
+                rating: 4.7,
+                reviews: 312,
+                description: "Pembersih wajah lembut dengan tekstur susu yang membersihkan tanpa menghilangkan kelembaban alami kulit.",
+                featured: true
+            }
+        ];
+
+        const testimonials = [
+            {
+                id: 1,
+                name: "Aisha Rahman",
+                role: "Verified Customer",
+                text: "Serum ini benar-benar game changer! Kulit saya jadi lebih cerah dan glowing dalam 2 minggu.",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+            },
+            {
+                id: 2,
+                name: "Dinda Putri",
+                role: "Verified Customer",
+                text: "Moisturizer favoritku! Ringan banget tapi super melembabkan. Cocok buat kulit kombinasi.",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
+            },
+            {
+                id: 3,
+                name: "Sari Wijaya",
+                role: "Verified Customer",
+                text: "Produknya natural, packaging cantik, dan yang paling penting hasilnya nyata!",
+                rating: 5,
+                image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop"
+            }
+        ];
+
+        // Main Component
+        function QuickPreview() {
+            const [cartOpen, setCartOpen] = useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            }, [cartOpen, mobileMenuOpen]);
+
+            const formatPrice = (price) => {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(price);
+            };
+
+            return (
+                <div style={{ fontFamily: 'Poppins, sans-serif' }}>
+                    {/* Header */}
+                    <header style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        background: 'white',
+                        borderBottom: '1px solid #E5E5E5',
+                        zIndex: 1000,
+                        padding: '1.2rem 2rem'
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center'
+                        }}>
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}>
+                                <span style={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontSize: '1.8rem',
+                                    fontWeight: 600,
+                                    color: '#2C2C2C',
+                                    letterSpacing: '0.02em'
+                                }}>LUMIÈRE</span>
+                                <span style={{
+                                    fontSize: '0.7rem',
+                                    letterSpacing: '0.15em',
+                                    color: '#C9A96E',
+                                    textTransform: 'uppercase',
+                                    marginTop: '-0.3rem'
+                                }}>Skincare</span>
+                            </div>
+
+                            <nav style={{ display: 'flex', gap: '2.5rem' }}>
+                                <a href="#" style={{ 
+                                    fontSize: '0.95rem',
+                                    color: '#2C2C2C',
+                                    textDecoration: 'none'
+                                }}>Home</a>
+                                <a href="#" style={{ 
+                                    fontSize: '0.95rem',
+                                    color: '#2C2C2C',
+                                    textDecoration: 'none'
+                                }}>Shop</a>
+                                <a href="#" style={{ 
+                                    fontSize: '0.95rem',
+                                    color: '#2C2C2C',
+                                    textDecoration: 'none'
+                                }}>About</a>
+                                <a href="#" style={{ 
+                                    fontSize: '0.95rem',
+                                    color: '#2C2C2C',
+                                    textDecoration: 'none'
+                                }}>Contact</a>
+                            </nav>
+
+                            <div style={{ display: 'flex', gap: '1.2rem' }}>
+                                <Search size={20} />
+                                <User size={20} />
+                                <ShoppingCart size={20} />
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Hero Section */}
+                    <section style={{
+                        marginTop: '80px',
+                        padding: '5rem 2rem',
+                        background: '#FAF8F3'
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '4rem',
+                            alignItems: 'center'
+                        }}>
+                            <div>
+                                <span style={{
+                                    display: 'inline-block',
+                                    padding: '0.5rem 1.5rem',
+                                    background: '#F5E6E6',
+                                    color: '#2C2C2C',
+                                    borderRadius: '30px',
+                                    fontSize: '0.85rem',
+                                    fontWeight: 500,
+                                    marginBottom: '1.5rem'
+                                }}>New Collection 2024</span>
+                                
+                                <h1 style={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontSize: '3.5rem',
+                                    lineHeight: 1.2,
+                                    color: '#2C2C2C',
+                                    margin: '0 0 1.5rem 0'
+                                }}>
+                                    Unveil Your True Beauty
+                                    <span style={{
+                                        display: 'block',
+                                        color: '#C9A96E',
+                                        fontStyle: 'italic'
+                                    }}>Embrace the Glow</span>
+                                </h1>
+                                
+                                <p style={{
+                                    fontSize: '1.1rem',
+                                    color: '#666666',
+                                    marginBottom: '2.5rem',
+                                    lineHeight: 1.8
+                                }}>
+                                    Discover our luxurious skincare collection crafted with natural ingredients for radiant, healthy skin
+                                </p>
+                                
+                                <div style={{ display: 'flex', gap: '1rem' }}>
+                                    <button style={{
+                                        padding: '1rem 2.5rem',
+                                        background: '#C9A96E',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '8px',
+                                        fontWeight: 600,
+                                        fontSize: '1rem',
+                                        cursor: 'pointer'
+                                    }}>Shop Now</button>
+                                    
+                                    <button style={{
+                                        padding: '1rem 2.5rem',
+                                        background: 'transparent',
+                                        color: '#2C2C2C',
+                                        border: '2px solid #2C2C2C',
+                                        borderRadius: '8px',
+                                        fontWeight: 600,
+                                        fontSize: '1rem',
+                                        cursor: 'pointer'
+                                    }}>Learn More</button>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <img 
+                                    src="https://images.unsplash.com/photo-1556228852-80e10279bb0e?w=600&h=700&fit=crop" 
+                                    alt="Skincare products"
+                                    style={{
+                                        width: '100%',
+                                        borderRadius: '20px',
+                                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Featured Products */}
+                    <section style={{
+                        padding: '5rem 2rem',
+                        background: 'white'
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto'
+                        }}>
+                            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                                <span style={{
+                                    color: '#C9A96E',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 600,
+                                    letterSpacing: '0.1em',
+                                    textTransform: 'uppercase'
+                                }}>Best Sellers</span>
+                                <h2 style={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontSize: '2.5rem',
+                                    color: '#2C2C2C',
+                                    margin: '1rem 0'
+                                }}>Popular Products</h2>
+                                <p style={{ fontSize: '1.1rem', color: '#666666' }}>
+                                    Our customers' favorites for glowing, healthy skin
+                                </p>
+                            </div>
+
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(3, 1fr)',
+                                gap: '2rem'
+                            }}>
+                                {products.map(product => (
+                                    <div key={product.id} style={{
+                                        background: 'white',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        border: '1px solid #E5E5E5',
+                                        position: 'relative'
+                                    }}>
+                                        {product.new && (
+                                            <span style={{
+                                                position: 'absolute',
+                                                top: '1rem',
+                                                left: '1rem',
+                                                background: '#C9A96E',
+                                                color: 'white',
+                                                padding: '0.4rem 1rem',
+                                                borderRadius: '20px',
+                                                fontSize: '0.75rem',
+                                                fontWeight: 600,
+                                                zIndex: 10
+                                            }}>New</span>
+                                        )}
+                                        
+                                        <div style={{ 
+                                            position: 'relative',
+                                            aspectRatio: '1',
+                                            background: '#F5EFE7'
+                                        }}>
+                                            <img 
+                                                src={product.image} 
+                                                alt={product.name}
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover'
+                                                }}
+                                            />
+                                        </div>
+                                        
+                                        <div style={{ padding: '1.5rem' }}>
+                                            <span style={{
+                                                fontSize: '0.8rem',
+                                                color: '#666666',
+                                                letterSpacing: '0.05em',
+                                                textTransform: 'uppercase'
+                                            }}>{product.category}</span>
+                                            
+                                            <h3 style={{
+                                                fontSize: '1.1rem',
+                                                fontWeight: 600,
+                                                color: '#2C2C2C',
+                                                margin: '0.5rem 0'
+                                            }}>{product.name}</h3>
+                                            
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '0.8rem',
+                                                margin: '1rem 0'
+                                            }}>
+                                                <span style={{
+                                                    fontSize: '1.3rem',
+                                                    fontWeight: 700,
+                                                    color: '#C9A96E',
+                                                    fontFamily: 'Playfair Display, serif'
+                                                }}>{formatPrice(product.price)}</span>
+                                                {product.oldPrice && (
+                                                    <span style={{
+                                                        fontSize: '1rem',
+                                                        color: '#666666',
+                                                        textDecoration: 'line-through'
+                                                    }}>{formatPrice(product.oldPrice)}</span>
+                                                )}
+                                            </div>
+                                            
+                                            <button style={{
+                                                width: '100%',
+                                                padding: '0.9rem',
+                                                background: '#2C2C2C',
+                                                color: 'white',
+                                                border: 'none',
+                                                borderRadius: '8px',
+                                                fontWeight: 600,
+                                                cursor: 'pointer',
+                                                fontSize: '0.95rem'
+                                            }}>Add to Cart</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Testimonials */}
+                    <section style={{
+                        padding: '5rem 2rem',
+                        background: '#F5EFE7'
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto'
+                        }}>
+                            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                                <span style={{
+                                    color: '#C9A96E',
+                                    fontSize: '0.9rem',
+                                    fontWeight: 600,
+                                    letterSpacing: '0.1em',
+                                    textTransform: 'uppercase'
+                                }}>Testimonials</span>
+                                <h2 style={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontSize: '2.5rem',
+                                    color: '#2C2C2C',
+                                    margin: '1rem 0'
+                                }}>What Our Customers Say</h2>
+                            </div>
+
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(3, 1fr)',
+                                gap: '2rem'
+                            }}>
+                                {testimonials.map(testimonial => (
+                                    <div key={testimonial.id} style={{
+                                        background: 'white',
+                                        padding: '2rem',
+                                        borderRadius: '16px',
+                                        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+                                    }}>
+                                        <p style={{
+                                            fontSize: '1rem',
+                                            lineHeight: 1.8,
+                                            color: '#2C2C2C',
+                                            marginBottom: '1.5rem',
+                                            fontStyle: 'italic'
+                                        }}>"{testimonial.text}"</p>
+                                        
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '1rem'
+                                        }}>
+                                            <img 
+                                                src={testimonial.image} 
+                                                alt={testimonial.name}
+                                                style={{
+                                                    width: '50px',
+                                                    height: '50px',
+                                                    borderRadius: '50%',
+                                                    objectFit: 'cover'
+                                                }}
+                                            />
+                                            <div>
+                                                <h4 style={{
+                                                    fontSize: '0.95rem',
+                                                    fontWeight: 600,
+                                                    color: '#2C2C2C',
+                                                    margin: 0
+                                                }}>{testimonial.name}</h4>
+                                                <span style={{
+                                                    fontSize: '0.85rem',
+                                                    color: '#666666'
+                                                }}>{testimonial.role}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Footer */}
+                    <footer style={{
+                        background: '#2C2C2C',
+                        color: 'white',
+                        padding: '4rem 2rem 2rem'
+                    }}>
+                        <div style={{
+                            maxWidth: '1400px',
+                            margin: '0 auto',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{
+                                fontFamily: 'Playfair Display, serif',
+                                fontSize: '1.8rem',
+                                fontWeight: 600,
+                                marginBottom: '1rem'
+                            }}>LUMIÈRE</div>
+                            <p style={{
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                marginBottom: '2rem'
+                            }}>
+                                Premium skincare crafted with natural ingredients
+                            </p>
+                            <div style={{
+                                paddingTop: '2rem',
+                                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+                                color: 'rgba(255, 255, 255, 0.5)'
+                            }}>
+                                &copy; 2024 Lumière Skincare. All rights reserved.
+                            </div>
+                        </div>
+                    </footer>
+
+                    {/* Info Banner */}
+                    <div style={{
+                        position: 'fixed',
+                        bottom: '2rem',
+                        right: '2rem',
+                        background: '#C9A96E',
+                        color: 'white',
+                        padding: '1rem 1.5rem',
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+                        fontSize: '0.9rem',
+                        fontWeight: 600,
+                        zIndex: 999
+                    }}>
+                        ℹ️ Preview Mode - Lihat README untuk setup lengkap
+                    </div>
+                </div>
+            );
+        }
+
+        // Render
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<QuickPreview />);
+    </script>
+</body>
+</html>
